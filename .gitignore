@@ -1,0 +1,39 @@
+# virtual environments
+venv/
+venv2/
+media/
+.venv/
+
+# environment variables
+.env
+.envrc
+
+# pycache
+*.py[cod]
+__pycache__
+
+# Logs
+logs
+*.log
+
+# collected static file directory
+staticfiles/
+
+# Pycharm
+.idea/
+.idea/*
+
+# sqlite database
+*.sqlite
+
+# Scripts
+RUN
+python
+
+*.pid
+
+#VS Code
+.vscode/
+*.zip
+data/donations/*
+data/overview/*
