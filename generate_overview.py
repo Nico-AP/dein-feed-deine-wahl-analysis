@@ -18,14 +18,12 @@ console = Console()
 
 load_dotenv()
 
-
 API_KEY = os.getenv('API_KEY', None)
 PROJECT_ID = os.getenv('PROJECT_ID', None)
 BASE_URL = os.getenv('BASE_URL', None)
 OVERVIEW_ENDPOINT = os.getenv('OVERVIEW_ENDPOINT', None)
 DONATION_ENDPOINT = os.getenv('DONATION_ENDPOINT', None)
 RESPONSE_ENDPOINT = os.getenv('RESPONSE_ENDPOINT', None)
-
 
 def print_to_console(msg):
     sys.stdout.write('\033[F')  # Move cursor up to overwrite the last task message
@@ -184,8 +182,18 @@ def generate_summary(df):
     console.print(f'----------------------------------------------------------')
 
 
+def ensure_directories_exist():
+    """Create necessary data directories if they don't exist."""
+    os.makedirs('./data/donations', exist_ok=True)
+    os.makedirs('./data/overview', exist_ok=True)
+
+
 def main():
     console.print('[white]Start script...[/]')
+    
+    # Create necessary directories
+    ensure_directories_exist()
+    
     # Load dataframes.
     df_participation, overview_data = get_participation_overview()
     df_responses = get_response_data()
