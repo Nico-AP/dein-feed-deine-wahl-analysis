@@ -172,6 +172,7 @@ def generate_summary(df, save_usable=True):
     string_mask = (df['Q2_age'].astype(str).str.match(r'^[A-Za-z]+$')) & (df['Q2_age'].astype(str) != 'nan')
     df = df[~string_mask]
     df = df[df['Q2_age'] != '99']
+    df = df[df['Q2_age'] != '-99']
 
     df_usable = df[df["completed"] == True]
     df_usable = df_usable[df_usable["AngeseheneVideos_consent"] == True]
