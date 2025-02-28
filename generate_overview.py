@@ -163,7 +163,7 @@ def process_participant(participant, blueprint_data, participation_overview):
     return d.copy()
 
 
-def generate_summary(df, save_usable=False):
+def generate_summary(df, save_usable=True):
     # Filter entries before start of data collection -> must be refined. (17th offical launch)
     df = df[df['start_time'] >= '2025-02-17']
 
@@ -173,16 +173,17 @@ def generate_summary(df, save_usable=False):
     df = df[~string_mask]
     df = df[df['Q2_age'] != '99']
 
-    if save_usable:
-        df_usable = df[df["completed"] == True]
-        df_usable = df_usable[df_usable["AngeseheneVideos_consent"] == True]
-        df_usable = df_usable[df_usable["AngeseheneVideos_n_datapoints"] > 0]
-        df_usable.to_csv('./data/overview/usable_overview.csv', index=False)
+    df_usable = df[df["completed"] == True]
+    df_usable = df_usable[df_usable["AngeseheneVideos_consent"] == True]
+    df_usable = df_usable[df_usable["AngeseheneVideos_n_datapoints"] > 0]
+    df_usable = df_usable[df_usable["Likes_n_datapoints"] > 0]
+    df_usable.to_csv('./data/overview/usable_overview.csv', index=False)
 
     n_started = df.shape[0]
+    
     n_finished = df['completed'].eq(True).sum()
     df = df[pd.to_numeric(df['Q2_age'], errors='coerce').notna()]
-    n_donated = df['AngeseheneVideos_consent'].eq(True).sum()
+    n_donated = df_usable['AngeseheneVideos_consent'].eq(True).sum()
 
     console.print(f'----------------------------------------------------------')
     console.print(f'[bold white]Here come the stats:')
