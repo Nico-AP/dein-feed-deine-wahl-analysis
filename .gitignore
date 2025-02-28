@@ -40,3 +40,5 @@ data/overview/*
 data/political_videos/*
 data/donations_as_csv/*
 
+sandbox.ipynb
+.DS_Store
