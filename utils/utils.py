@@ -40,6 +40,111 @@ def flatten_responses(responses):
     return flat_responses
 
 
+def json_to_df(data):
+    """
+    Convert JSON donation data to a DataFrame with all activity types.
+    
+    Parameters:
+    -----------
+    data : dict
+        The JSON data loaded from a donation file
+    
+    Returns:
+    --------
+    pandas.DataFrame
+        Combined DataFrame with all activity types
+    """
+    # Define all possible columns to ensure consistency
+    all_columns = [
+        'timestamp', 'link', 'activity_type', 'date', 'searchterm', 
+        'sharedcontent', 'method', 'who_can_view', 'allow_comments', 
+        'allow_stitches', 'likes', 'url', 'user_name', 'participant_id'
+    ]
+    
+    # Initialize empty DataFrames for each activity type
+    angesehene_videos = pd.DataFrame()
+    likes = pd.DataFrame()
+    suche = pd.DataFrame()
+    shares = pd.DataFrame()
+    posts = pd.DataFrame()
+    kommentare = pd.DataFrame()
+    folgende_accounts = pd.DataFrame()
+    gefolgte_accounts = pd.DataFrame()
+    blockierte_accounts = pd.DataFrame()
+    
+    # Try to process each blueprint, handling missing keys
+    try:
+        angesehene_videos = pd.DataFrame(data['blueprints']['1']['donations'][0]['data']).rename(columns={'Date':'timestamp','Link':'link'})
+        angesehene_videos['activity_type'] = 'watch_video'
+    except (KeyError, IndexError, ValueError):
+        pass
+    
+    try:
+        likes = pd.DataFrame(data['blueprints']['2']['donations'][0]['data']).rename(columns={'Date':'timestamp','link':'link'})
+        likes['activity_type'] = 'like'
+    except (KeyError, IndexError, ValueError):
+        pass
+    
+    try:
+        suche = pd.DataFrame(data['blueprints']['3']['donations'][0]['data']).rename(columns={'Date':'timestamp','SearchTerm':'searchterm'})
+        suche['activity_type'] = 'search'
+    except (KeyError, IndexError, ValueError):
+        pass
+    
+    try:
+        shares = pd.DataFrame(data['blueprints']['4']['donations'][0]['data']).rename(columns={'Date':'timestamp','Link':'link', 
+                                                                                    'SharedContent':'sharedcontent', 'Method':'method'})
+        shares['activity_type'] = 'share'
+    except (KeyError, IndexError, ValueError):
+        pass
+    
+    try:
+        posts = pd.DataFrame(data['blueprints']['5']['donations'][0]['data']).rename(columns = {'Date':'timestamp','WhoCanView':'who_can_view',
+                                                                                     'AllowComments':'allow_comments',
+                                                                                     'AllowStitches':'allow_stitches',
+                                                                                     'Likes':'likes'})
+        posts['activity_type'] = 'post'
+    except (KeyError, IndexError, ValueError):
+        pass
+    
+    try:
+        kommentare = pd.DataFrame(data['blueprints']['6']['donations'][0]['data']).rename(columns={'Date':'timestamp'})
+        kommentare['activity_type'] = 'comment'
+    except (KeyError, IndexError, ValueError):
+        pass
+    
+    try:
+        folgende_accounts = pd.DataFrame(data['blueprints']['7']['donations'][0]['data']).rename(columns={'Date':'timestamp','UserName':'user_name'})
+        folgende_accounts['activity_type'] = 'follows_user'
+    except (KeyError, IndexError, ValueError):
+        pass
+    
+    try:
+        gefolgte_accounts = pd.DataFrame(data['blueprints']['8']['donations'][0]['data']).rename(columns={'Date':'timestamp','UserName':'user_name'})
+        gefolgte_accounts['activity_type'] = 'followed_user'
+    except (KeyError, IndexError, ValueError):
+        pass
+    
+    try:
+        blockierte_accounts = pd.DataFrame(data['blueprints']['9']['donations'][0]['data']).rename(columns={'Date':'timestamp','UserName':'user_name'})
+        blockierte_accounts['activity_type'] = 'blocked_user'
+    except (KeyError, IndexError, ValueError):
+        pass
+    
+    # Combine all DataFrames
+    combined_df = pd.concat([
+        angesehene_videos, likes, suche, shares, posts, 
+        kommentare, folgende_accounts, gefolgte_accounts, blockierte_accounts
+    ]).reset_index(drop=True)
+    
+    # Ensure all columns exist (add empty ones if missing)
+    for col in all_columns:
+        if col not in combined_df.columns:
+            combined_df[col] = None
+    
+    return combined_df
+
+
 def get_pol_videos(endpoint, auth_token, output_file=None, date=None, username=None):
     """
     Fetch political videos from the API with pagination support and save to file.

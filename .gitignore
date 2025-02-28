@@ -38,4 +38,5 @@ python
 data/donations/*
 data/overview/*
 data/political_videos/*
+data/donations_as_csv/*
 

@@ -1,0 +1,14 @@
+timestamp
+link
+activity_type
+date
+searchterm
+sharedcontent
+method
+who_can_view
+allow_comments
+allow_stitches
+likes
+url
+user_name
+participant_id
