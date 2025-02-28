@@ -16,7 +16,7 @@ For that purpose is currently contains four scripts:
         - ... the number of donations by date, but only for donations that were completed after 5am.
         - ... the distributions of datapoints by activity category (e.g., likes, comments, etc.).
         - ... the voting behaviour of participants (Erststimme und Zweitstimme).
-3. `pull_political_videos.py` [WILL BE FINALIZED TODAY]: This script downlodas all videos that are scraped on a daily basis from the database and saves them as `/data/political_videos.csv`. This only needs to be run once to set up the enviroment.
+3. `pull_political_videos.py`: This script downloads all videos that are scraped on a daily basis from the database and saves them as `/data/political_videos.csv`. This only needs to be run once to set up the enviroment. It should take max. 20min, depending on your speed.
 4. `process_donations.py` [WILL BE FINALIZED TODAY]: This script processes the donations and saves them as csvs in `/data/processed_donations/` if you prefer to work with them in that way.
 
 
