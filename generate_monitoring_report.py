@@ -8,6 +8,7 @@ from utils.plotter import (
     plot_timestamp_distribution,
     plot_vote_distribution
 )
+from utils.survey_codes import PARTY_DICT
 from collections import Counter
 
 # Get list of all CSV files in the overview directory
@@ -27,9 +28,6 @@ df_usable = pd.read_csv('./data/overview/usable_overview.csv')
 
 plot_data_points_by_category(df_usable, save=True)
 
-print(len(df_usable))
-print(df_usable.head())
-
 ##### print out survey distributions
 
 # Convert to numeric first (which preserves NaN), then describe only non-NaN values
@@ -37,21 +35,9 @@ stats = df_usable.loc[:,['Q1_gender','Q2_age','Q3_education','Q7_polInt-0']].des
 
 print(stats)
 
-party_dict = {0:'SPD',
-1:'CDU/CSU',
-2:'Bündnis 90/Die Grünen',
-3:'FDP',
-4:'AfD',
-5:'Die Linke',
-6:'BSW',
-7:'Andere Partei',
-8:'Ungültig',
-9:'Keine Angabe',
-10:'Nicht wahlberechtigt',
-11:'Nicht wählen'}
-
-df_usable['Q5_first_vote'] = df_usable['Q5_first_vote'].map(party_dict)
-df_usable['Q6_second_vote'] = df_usable['Q6_second_vote'].map(party_dict)
+# Use the imported PARTY_DICT instead of defining it inline
+df_usable['Q5_first_vote'] = df_usable['Q5_first_vote'].map(PARTY_DICT)
+df_usable['Q6_second_vote'] = df_usable['Q6_second_vote'].map(PARTY_DICT)
 
 print(Counter(df_usable['Q5_first_vote']))
 print(Counter(df_usable['Q6_second_vote']))

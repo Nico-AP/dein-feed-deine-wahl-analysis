@@ -57,9 +57,22 @@ To pull the political videos, run:
 
 `python pull_political_videos.py`
 
+
+   The script supports the following command-line arguments:
+   - `--date`: Filter videos by a specific date (format: YYYY-MM-DD)
+   - `--username`: Filter videos by a specific TikTok username
+   - `--output`: Specify a custom output file path (default: data/pol_videos.csv)
+   
+   Example usage:
+   ```
+   python pull_political_videos.py --date 2023-05-01 --output data/filtered_videos.csv
+   ```
+
 To process the donations to csv format, run:
 
 `python process_donations.py`
+
+
 
 
 ### How the generate_overview.py script works
