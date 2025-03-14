@@ -35,10 +35,15 @@ python
 #VS Code
 .vscode/
 *.zip
+data/*
 data/donations/*
 data/overview/*
 data/political_videos/*
-data/donations_as_csv/*
+data/donations_as_csv/*$
+
+plots
+plots/
+plots/*
 
 sandbox.ipynb
 .DS_Store
