@@ -1,0 +1,1 @@
+This scraper is based on the Work by Quentin Bukold: https://doi.org/10.34669/WI.RD/4
