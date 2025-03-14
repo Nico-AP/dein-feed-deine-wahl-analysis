@@ -10,8 +10,8 @@ from dotenv import load_dotenv
 from rich.console import Console
 from tqdm import tqdm
 
-from utils.data_request import request_data
-from utils.utils import save_json_file, flatten_responses
+from monitoring.utils.data_request import request_data
+from monitoring.utils.utils import save_json_file, flatten_responses
 
 
 console = Console()
@@ -24,6 +24,7 @@ BASE_URL = os.getenv('BASE_URL', None)
 OVERVIEW_ENDPOINT = os.getenv('OVERVIEW_ENDPOINT', None)
 DONATION_ENDPOINT = os.getenv('DONATION_ENDPOINT', None)
 RESPONSE_ENDPOINT = os.getenv('RESPONSE_ENDPOINT', None)
+
 
 def print_to_console(msg):
     sys.stdout.write('\033[F')  # Move cursor up to overwrite the last task message

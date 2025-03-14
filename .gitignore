@@ -47,3 +47,5 @@ plots/*
 
 sandbox.ipynb
 .DS_Store
+
+test.py

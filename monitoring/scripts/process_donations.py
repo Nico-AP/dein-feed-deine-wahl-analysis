@@ -4,7 +4,7 @@ import pandas as pd
 import glob
 from tqdm import tqdm
 import argparse
-from utils.utils import json_to_df
+from monitoring.utils.utils import json_to_df
 
 def process_donation_file(json_path, output_dir):
     """

@@ -1,14 +1,13 @@
 import pandas as pd
 import os
 import glob
-from generate_overview import generate_summary
-from utils.plotter import (
-    plot_donations_by_date, 
-    plot_data_points_by_category, 
+from monitoring.scripts.generate_overview import generate_summary
+from monitoring.utils.plotter import (
+    plot_data_points_by_category,
     plot_timestamp_distribution,
     plot_vote_distribution
 )
-from utils.survey_codes import PARTY_DICT
+from monitoring.utils.survey_codes import PARTY_DICT
 from collections import Counter
 
 # Get list of all CSV files in the overview directory

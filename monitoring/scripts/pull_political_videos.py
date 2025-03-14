@@ -1,7 +1,7 @@
 import os
 import argparse
 from dotenv import load_dotenv
-from utils.utils import get_pol_videos
+from monitoring.utils.utils import get_pol_videos
 
 def main():
     # Parse command line arguments
