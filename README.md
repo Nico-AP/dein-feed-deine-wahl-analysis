@@ -59,7 +59,6 @@ To pull the political videos, run:
 
 `python -m monitoring.scripts.pull_political_videos`
 
-
    The script supports the following command-line arguments:
    - `--date`: Filter videos by a specific date (format: YYYY-MM-DD)
    - `--username`: Filter videos by a specific TikTok username
@@ -112,7 +111,7 @@ To retrieve the scraped metadata for videos from the server, you can use the fol
 ```
 import json
 
-from metadata.scripts import get_video_metadata
+from metadata.api_utils import get_video_metadata
 
 video_id = '12345678910'
 metadata = get_video_metadata(video_id)
@@ -120,3 +119,15 @@ print(json.dumps(metadata, indent=4))  # print or do something else with the dat
 ```
 
 Just make sure you have set the VIDEO_GET_ENDPOINT and AUTH_TOKEN variables in your .env file.
+
+### Utility functions/scripts
+
+In addition, there are also some utility functions/scripts available:
+
+#### Extracting Video IDs for a specific participant
+
+To extract a list of the videos a participant has watched, you can use the function 
+`from metadata.utils import get_video_list_for_participant`.
+
+The function is also available in the command line: 
+`python -m metadata.utils.get_participant_videos -- participant_id=<participant ID>`
